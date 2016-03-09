@@ -98,4 +98,9 @@ contract TokenizedSplitter {
         balance = accounts[_owner].tokens;
     }
 
+    function cashBalanceOf(address _owner) constant external returns (uint256 cash) {
+        allocateCash();
+        cash = accounts[msg.sender].cash;
+    }
+
 }
