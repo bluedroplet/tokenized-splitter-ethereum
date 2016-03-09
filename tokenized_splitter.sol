@@ -20,7 +20,7 @@ contract TokenizedSplitter {
     uint8 public decimals = 0;
     uint public totalSupply;
 
-    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Transfer(address indexed from, address indexed to, uint256 value);
 
     function TokenizedSplitter(string tokenName, string tokenSymbol, uint248 tokenTotalSupply) {
         // Store the token metadata
