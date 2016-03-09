@@ -17,16 +17,15 @@ contract TokenizedSplitter {
 
     string public name;
     string public symbol;
-    uint8 public decimals;
+    uint8 public decimals = 0;
     uint public totalSupply;
 
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-    function TokenizedSplitter(string tokenName, string tokenSymbol, uint8 tokenDecimals, uint248 tokenTotalSupply) {
+    function TokenizedSplitter(string tokenName, string tokenSymbol, uint248 tokenTotalSupply) {
         // Store the token metadata
         name = tokenName;
         symbol = tokenSymbol;
-        decimals = tokenDecimals;
         totalSupply = tokenTotalSupply;
         // Give the contract creator all the tokens.
         accounts[msg.sender].activated = true;
