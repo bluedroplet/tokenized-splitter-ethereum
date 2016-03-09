@@ -58,13 +58,13 @@ contract TokenizedSplitter {
         allocatedCash = this.balance;
     }
 
-    function cashout(address destination) external {
+    function cashout() external {
         // Process any deposited ether.
         allocateCash();
         // Get the storage address for the sender's account.
         Account account = accounts[msg.sender];
         // Send the ether to the specified address.
-        destination.send(account.cash);
+        msg.sender.send(account.cash);
         // Record this account as having no ether.
         account.cash = 0;
         // Set the record of allocated cash to the current balance.
