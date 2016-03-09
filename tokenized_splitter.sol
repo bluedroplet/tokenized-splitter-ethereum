@@ -13,17 +13,24 @@ contract TokenizedSplitter {
     mapping (address => Account) accounts;
     address[] accountAddresses;
 
-    uint totalTokens;
     uint allocatedCash;
+
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    uint public totalSupply;
 
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-    function TokenizedSplitter(uint248 total) external {
-        // Store the total number of tokens.
-        totalTokens = total;
+    function TokenizedSplitter(string tokenName, string tokenSymbol, uint8 tokenDecimals, uint248 tokenTotalSupply) {
+        // Store the token metadata
+        name = tokenName;
+        symbol = tokenSymbol;
+        decimals = tokenDecimals;
+        totalSupply = tokenTotalSupply;
         // Give the contract creator all the tokens.
         accounts[msg.sender].activated = true;
-        accounts[msg.sender].tokens = total;
+        accounts[msg.sender].tokens = tokenTotalSupply;
         accountAddresses.push(msg.sender);
     }
 
@@ -45,7 +52,7 @@ contract TokenizedSplitter {
                 // unallocated ether in proportion to how many of the tokens the
                 // account has. Integer division rounds down so a very small
                 // amount of ether may be lost.
-                account.cash += (unallocatedCash * account.tokens) / totalTokens;
+                account.cash += (unallocatedCash * account.tokens) / totalSupply;
             }
         }
         // Set the record of allocated cash to the current balance.
@@ -86,10 +93,6 @@ contract TokenizedSplitter {
         // Log the event.
         Transfer(msg.sender, _to, _value);
         return true;
-    }
-
-    function totalSupply() constant external returns (uint256 supply) {
-        return totalTokens;
     }
 
     function balanceOf(address _owner) constant external returns (uint256 balance) {
