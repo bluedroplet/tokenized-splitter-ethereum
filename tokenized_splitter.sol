@@ -77,8 +77,8 @@ contract TokenizedSplitter {
         // Get the storage address for the sender and receiver's accounts.
         Account fromAccount = accounts[msg.sender];
         Account toAccount = accounts[_to];
-        // Check there is sufficent balance.
-        if (fromAccount.tokens < _value) {
+        // Check there is sufficent balance and there is no overflow.
+        if (fromAccount.tokens < _value || toAccount.tokens + _value < toAccount.tokens) {
             return false;
         }
         // Ensure the receiver has an activated account.
